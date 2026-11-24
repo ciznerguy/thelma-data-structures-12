@@ -350,7 +350,18 @@ public class Stack<T>
     {
         if (this.IsEmpty())
             return "[]";
-        string temp = head.ToString();
-        return "TOP <== " + temp.Substring(0, temp.Length - 1) + "]";
+        //בונה את רשימת הערכים בלולאה על החוליות
+        string temp = "";
+        Node<T> p = head;
+        while (p != null)
+        {
+            temp = temp + p.GetValue();
+            if (p.HasNext())
+            {
+                temp = temp + ",";
+            }
+            p = p.GetNext();
+        }
+        return "TOP <== " + temp + "]";
     }
 }

@@ -375,7 +375,18 @@ public class Queue<T>
     {
         if (this.IsEmpty())
             return "[]";
-        string temp = first.ToString();
-        return "QueueHead[" + temp.Substring(0, temp.Length - 1) + "]";
+        //בונה את רשימת הערכים בלולאה על החוליות
+        string temp = "";
+        Node<T> p = first;
+        while (p != null)
+        {
+            temp = temp + p.GetValue();
+            if (p.HasNext())
+            {
+                temp = temp + ",";
+            }
+            p = p.GetNext();
+        }
+        return "QueueHead[" + temp + "]";
     }
 }
