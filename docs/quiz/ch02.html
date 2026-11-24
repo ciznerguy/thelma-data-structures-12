@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מבחן תרגול, פרק 2: רקורסיה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a href="../index.html#ch2">← חזרה לפרק 2</a>
+  <h1>מבחן תרגול: פרק 2, רקורסיה</h1>
+  <p>15 שאלות אמריקאיות. בסוף תקבלו ציון ומשוב: מה היה טוב ועל מה כדאי לחזור.</p>
+</div></header>
+<main class="wrap">
+  <div class="notice">המבחן נועד למטרת למידה בלבד. אין ציון שנשמר, והתוצאות אינן נשלחות לאף גורם.</div>
+  <div class="bar"><div class="row"><span id="cnt">0 מתוך 15 נענו</span><div class="track"><div class="fill" id="fill"></div></div></div></div>
+  <div id="result"></div>
+  <div id="quiz"></div>
+  <div class="actions"><button id="fin">סיום ובדיקה</button></div>
+  <div class="warnmsg" id="warn" role="status"></div>
+</main>
+<footer>מבנה נתונים ותכנות מונחה עצמים, תלמה ילין</footer>
+<script>window.QUIZ={"chapter": 2, "title": "רקורסיה", "topics": ["מושגי רקורסיה", "מעקב אחרי רקורסיה", "סוגי רקורסיה", "רקורסיה על מספרים", "רקורסיה על מערכים ויתרונות"], "chapterUrl": "https://github.com/ciznerguy/thelma-data-structures-12/tree/main/%D7%A4%D7%A8%D7%A7%2002", "questions": [{"topic": 0, "text": "מהו תנאי העצירה בפעולה רקורסיבית?", "code": null, "right": "המקרה הפשוט ביותר, שבו הפעולה לא קוראת לעצמה", "wrongs": ["הקריאה שבה הפעולה קוראת לעצמה", "השורה האחרונה בפעולה", "הפרמטר הראשון של הפעולה"], "why": "בלי תנאי עצירה הפעולה היתה קוראת לעצמה בלי סוף."}, {"topic": 0, "text": "מה קורה אם לפעולה רקורסיבית אין תנאי עצירה?", "code": null, "right": "היא קוראת לעצמה בלי סוף והתוכנית קורסת", "wrongs": ["היא רצה פעם אחת ונגמרת", "המהדר מסרב להדר את התוכנית", "הערך שהיא מחזירה תמיד 0"], "why": "כל קריאה תופסת מקום בזיכרון, עד שהזיכרון נגמר."}, {"topic": 0, "text": "מה צריך לקרות לפרמטר בקריאה הרקורסיבית?", "code": null, "right": "הוא מתקרב לתנאי העצירה", "wrongs": ["הוא נשאר זהה בכל הקריאות", "הוא מוכפל בכל קריאה", "הוא מקבל ערך אקראי"], "why": "רק כך הקריאות מגיעות בסופו של דבר לתנאי העצירה."}, {"topic": 1, "text": "מה יודפס?", "code": "static void Show(int n)\n{\n    if (n == 0)\n    {\n        return;\n    }\n    Console.Write(n + \" \");\n    Show(n - 1);\n}\n\nShow(3);", "right": "3 2 1", "wrongs": ["1 2 3", "3 2 1 0", "2 1"], "why": "ההדפסה קודמת לקריאה הרקורסיבית, ולכן הערכים מודפסים בסדר הקריאות."}, {"topic": 1, "text": "מה יודפס?", "code": "static void Show(int n)\n{\n    if (n == 0)\n    {\n        return;\n    }\n    Show(n - 1);\n    Console.Write(n + \" \");\n}\n\nShow(3);", "right": "1 2 3", "wrongs": ["3 2 1", "3 2 1 0", "1 2 3 0"], "why": "ההדפסה אחרי הקריאה הרקורסיבית, ולכן הערכים מודפסים בסדר ההפוך לסדר הקריאות."}, {"topic": 1, "text": "מה יודפס?", "code": "static int F(int n)\n{\n    if (n == 1)\n    {\n        return 1;\n    }\n    return n + F(n - 1);\n}\n\nConsole.WriteLine(F(4));", "right": "10", "wrongs": ["24", "4", "6"], "why": "F(4) = 4 + F(3) = 4 + 3 + F(2) = 4 + 3 + 2 + F(1) = 10."}, {"topic": 2, "text": "מה יודפס?", "code": "static int Fib(int n)\n{\n    if (n <= 2)\n    {\n        return 1;\n    }\n    return Fib(n - 1) + Fib(n - 2);\n}\n\nConsole.WriteLine(Fib(6));", "right": "8", "wrongs": ["6", "13", "5"], "why": "הסדרה היא 1, 1, 2, 3, 5, 8, ולכן האיבר השישי הוא 8."}, {"topic": 2, "text": "מהי רקורסיה הדדית?", "code": null, "right": "פעולה א קוראת לפעולה ב, ופעולה ב קוראת לפעולה א", "wrongs": ["פעולה שקוראת לעצמה פעמיים", "פעולה שקוראת לעצמה ולפעולה אחרת בלי תנאי עצירה", "שתי פעולות עם אותו שם"], "why": "בפעולות הדדיות אף פעולה אינה קוראת לעצמה ישירות."}, {"topic": 2, "text": "באיזה סוג רקורסיה מופיעות שתי קריאות רקורסיביות באותה פעולה?", "code": null, "right": "רקורסיה כפולה", "wrongs": ["רקורסיה הדדית", "רקורסיה ישירה פשוטה", "רקורסיה בלי תנאי עצירה"], "why": "כמו בחישוב איברי סדרת פיבונאצ'י."}, {"topic": 3, "text": "מה יודפס?", "code": "static int Count(int n)\n{\n    if (n < 10)\n    {\n        return 1;\n    }\n    return 1 + Count(n / 10);\n}\n\nConsole.WriteLine(Count(4096));", "right": "4", "wrongs": ["1", "3", "10"], "why": "הפעולה מוחקת ספרה אחרונה בכל קריאה ומחזירה את מספר הספרות."}, {"topic": 3, "text": "מה יודפס?", "code": "static int Mul(int a, int b)\n{\n    if (b == 0)\n    {\n        return 0;\n    }\n    return a + Mul(a, b - 1);\n}\n\nConsole.WriteLine(Mul(4, 3));", "right": "12", "wrongs": ["7", "64", "81"], "why": "4 ועוד 4 ועוד 4: חיבור חוזר שווה לכפל."}, {"topic": 3, "text": "מה יודפס?", "code": "static int Digits(int n)\n{\n    if (n == 0)\n    {\n        return 0;\n    }\n    return n % 10 + Digits(n / 10);\n}\n\nConsole.WriteLine(Digits(305));", "right": "8", "wrongs": ["35", "3", "305"], "why": "סכום הספרות: 5 ועוד 0 ועוד 3."}, {"topic": 4, "text": "מה יודפס?", "code": "static int Sum(int[] arr, int index)\n{\n    if (index == arr.Length)\n    {\n        return 0;\n    }\n    return arr[index] + Sum(arr, index + 1);\n}\n\nConsole.WriteLine(Sum(new int[] { 2, 5, 1 }, 0));", "right": "8", "wrongs": ["3", "7", "2"], "why": "הסכום של כל האיברים, מהמקום 0 ועד הסוף."}, {"topic": 4, "text": "מה יודפס?", "code": "static int Calls(int n)\n{\n    if (n == 0)\n    {\n        return 1;\n    }\n    return 1 + Calls(n - 1);\n}\n\nConsole.WriteLine(Calls(4));", "right": "5", "wrongs": ["4", "3", "1"], "why": "הפעולה נקראת עבור 4, 3, 2, 1 ו-0: כל אחד מהערכים מוסיף 1 לתוצאה."}, {"topic": 4, "text": "מהו חיסרון של פתרון רקורסיבי?", "code": null, "right": "הוא צורך זמן וזיכרון, כי כל קריאה נשמרת עד שתסתיים", "wrongs": ["הוא לא יכול לפתור בעיות מספריות", "הוא תמיד איטי יותר מפתרון עם לולאה", "הוא אינו יכול להחזיר ערך"], "why": "ליתרון בפשטות הפתרון יש מחיר במשאבים."}]};</script>
+<script src="quiz.js"></script>
+</body>
+</html>

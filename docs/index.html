@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מבנה נתונים ותכנות מונחה עצמים, כיתה י"ב</title>
+<meta name="description" content="סביבת לימוד בעברית ל-C#: מבנה נתונים ותכנות מונחה עצמים, דוגמאות קוד, משימות ומבחני תרגול לכיתה י\"ב, תלמה ילין.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1b1f3b;--muted:#5d647f;--line:#e3e6f0;--brand:#5b4bdb;--brand2:#14b8a6;--hot:#f59e0b;--code:#eef0fa;--shadow:0 6px 24px rgba(40,40,100,.08)}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1220;--card:#181c33;--ink:#eceefb;--muted:#9aa2c4;--line:#2a2f52;--brand:#8b7dff;--brand2:#2dd4bf;--code:#232850;--shadow:0 6px 24px rgba(0,0,0,.35)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Heebo,system-ui,sans-serif;line-height:1.7}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+.hero{background:linear-gradient(135deg,#3b2fb5,#5b4bdb 45%,#14b8a6);color:#fff;padding:64px 0 90px;position:relative;overflow:hidden}
+.hero .wrap{position:relative}
+.hero .wrap>*:not(.deco){position:relative;z-index:1}
+.deco{position:absolute;left:16px;top:-20px;display:flex;align-items:center;direction:ltr;z-index:0;pointer-events:none}
+.deco i{font:800 230px/1 'JetBrains Mono',monospace;font-style:normal;color:rgba(255,255,255,.13)}
+.deco img{height:112px;width:auto;margin:0 -6px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.3))}
+@media (max-width:640px){.deco{position:static;margin:-8px 0 6px}.deco i{font-size:100px}.deco img{height:52px}}
+.hero small{opacity:.85;font-weight:500;letter-spacing:.3px}
+.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.15;margin:8px 0 12px;font-weight:800}
+.hero p{max-width:640px;font-size:18px;opacity:.93;margin:0 0 26px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.cta a{padding:12px 22px;border-radius:12px;font-weight:700;background:#fff;color:#3b2fb5}
+.cta a.o{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.7)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:-48px;position:relative;z-index:2}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);text-align:center}
+.stat b{display:block;font-size:34px;color:var(--brand);font-weight:800;line-height:1.1}
+.stat span{color:var(--muted);font-size:14px}
+nav.chips{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:28px}
+nav.chips .wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;align-items:center}
+nav.chips span{color:var(--muted);font-size:14px;white-space:nowrap;margin-inline-end:4px}
+nav.chips a{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);font-weight:700}
+nav.chips a:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+h2{font-size:28px;margin:48px 0 6px}
+.sub{color:var(--muted);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.chapter{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;scroll-margin-top:70px}
+.chapter header{display:flex;gap:14px;align-items:center}
+.num{flex:none;width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;display:grid;place-items:center;font-size:24px;font-weight:800}
+.chapter h3{margin:0;font-size:20px;line-height:1.3}
+.badge{display:inline-block;font-size:12px;padding:1px 10px;border-radius:99px;background:var(--code);color:var(--muted);font-weight:500}
+.badge.hot{background:color-mix(in srgb,var(--hot) 20%,transparent);color:var(--hot);font-weight:700}
+.points{margin:0;padding-inline-start:20px;color:var(--muted);font-size:15px}
+details{border:1px solid var(--line);border-radius:12px;padding:0 12px;background:var(--bg)}
+summary{cursor:pointer;padding:10px 0;font-weight:700;font-size:15px}
+.examples{list-style:none;margin:0;padding:0 0 10px;display:flex;flex-direction:column;gap:8px}
+.examples li{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.examples .n{flex:none;width:24px;height:24px;border-radius:8px;background:var(--code);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--brand)}
+.examples code{display:block;direction:ltr;text-align:left;font:500 12px 'JetBrains Mono',monospace;color:var(--muted)}
+.chapter footer{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.btn{padding:8px 14px;border-radius:10px;font-weight:700;font-size:14px;background:var(--brand);color:#fff}
+.btn.ghost{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}
+.gradeband{margin:44px 0 18px;padding:16px 22px;border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--hot) 18%,var(--card)),var(--card));border:1px solid var(--hot);border-inline-start:8px solid var(--hot);box-shadow:var(--shadow)}
+.gradeband h3{margin:0;font-size:22px}
+.gradeband p{margin:2px 0 0;color:var(--muted)}
+.rec{margin:0;padding:8px 12px;border-radius:12px;background:color-mix(in srgb,var(--brand2) 14%,var(--card));border:1px solid var(--brand2);font-size:14px;line-height:1.55}
+.rec a{color:var(--brand);font-weight:700;text-decoration:underline}
+.tasksrow{background:color-mix(in srgb,var(--hot) 12%,var(--card));border:1px solid var(--hot);border-radius:14px;padding:8px 10px}
+.tasksrow>b{display:block;font-size:14px;margin-bottom:6px}
+.tasksrow>div{display:flex;gap:6px}
+.tasksrow .btn{flex:1 1 0;min-width:0;text-align:center;white-space:nowrap;padding:6px 4px;font-size:12.5px;border-radius:9px}
+@media (max-width:360px){.tasksrow .btn{font-size:11px;padding:6px 1px}}
+.chapter .lower{margin-top:auto;display:flex;flex-direction:column;gap:12px}
+.chapter .lower footer{margin-top:0}
+.tasksrow.ph{visibility:hidden}
+.btn.copy{border:0;cursor:pointer;font-family:inherit}
+.chapter footer{display:grid!important;grid-template-columns:1fr 1fr;gap:8px;align-items:stretch}
+.chapter footer .btn{display:flex;align-items:center;justify-content:center;text-align:center;font-size:14px;padding:8px 6px;white-space:nowrap;min-width:0}
+.chapter footer .btn.wide{grid-column:1/-1}
+.runsteps{margin:0 0 10px;padding-inline-start:20px;font-size:14px;color:var(--muted)}
+.runsteps a{color:var(--brand);font-weight:700}
+.btn.quiz{background:var(--brand2);color:#04332e}
+.btn.task{background:var(--hot);color:#2a1d00}
+.btn:hover{filter:brightness(1.1)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;padding:0;list-style:none}
+.steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 18px 18px}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;margin-bottom:8px}
+pre{direction:ltr;text-align:left;background:#10132b;color:#d7dcff;border-radius:12px;padding:14px 16px;overflow-x:auto;font:500 14px/1.6 'JetBrains Mono',monospace;margin:10px 0 0}
+.note{background:var(--card);border:1px solid var(--line);border-inline-start:5px solid var(--brand2);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow)}
+.note ul{margin:6px 0 0;padding-inline-start:20px;color:var(--muted)}
+footer.site{margin:60px 0 0;padding:26px 0;border-top:1px solid var(--line);color:var(--muted);text-align:center;font-size:14px}
+footer.site a{color:var(--brand);font-weight:700}
+.chapter.dim{opacity:.62}
+.badge.dim{background:color-mix(in srgb,var(--muted) 22%,transparent);color:var(--muted);font-weight:700}
+.btn.soon{cursor:default;opacity:.8}
+.grid{grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr))}
+.partband{margin:44px 0 6px}
+.partband h2{margin:0 0 4px}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="deco" aria-hidden="true"><i>{</i><img src="csharp-logo.png" alt=""><i>}</i></div>
+  <small>תלמה ילין · כיתה י"ב</small>
+  <h1>מבנה נתונים ותכנות מונחה עצמים<br>בשפת <bdi dir="ltr">C#</bdi></h1>
+  <p>דוגמאות קוד מוכנות להרצה, משימות ומבחני תרגול, עם הסברים בעברית.</p>
+  <div class="cta"><a href="#chapters">לפרקים</a><a class="o" href="#start">איך מריצים</a><a class="o" href="https://github.com/ciznerguy/thelma-data-structures-12">המאגר ב-GitHub</a></div>
+</div></header>
+
+<main class="wrap">
+  <section class="stats">
+    <div class="stat"><b>11</b><span>פרקים נלמדים השנה</span></div>
+    <div class="stat"><b>110</b><span>דוגמאות קוד</span></div>
+    <div class="stat"><b>22</b><span>משימות אסינכרוניות</span></div>
+    <div class="stat"><b>90</b><span>דקות לכל היותר למשימה</span></div>
+  </section>
+</main>
+
+<nav class="chips"><div class="wrap"><span>קפיצה לפרק:</span><a href='#ch1'>1</a><a href='#ch2'>2</a><a href='#ch3'>3</a><a href='#ch4'>4</a><a href='#ch5'>5</a><a href='#ch6'>6</a><a href='#ch7'>7</a><a href='#ch8'>8</a><a href='#ch9'>9</a><a href='#ch10'>10</a><a href='#ch11'>11</a><a href='#ch12'>12</a></div></nav>
+
+<main class="wrap" id="chapters">
+<div class="partband" id="partא"><h2>חלק א: מבנה נתונים</h2><p class="sub">הסדר לפי מצגות הלימוד של משרד החינוך. פרק המחסנית לא נלמד השנה, והוא מצורף לעיון בלבד.</p></div>
+<section class="grid">
+<article class="chapter" id="ch1">
+  <header><span class="num">1</span><div><h3>יעילות</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>יעילות</b>.</p>
+  <ul class="points"><li>יעילות נמדדת בספירת צעדים, לא בשניות, כי שניות תלויות במחשב.</li><li>פעולה שמספר הצעדים שלה לא תלוי בגודל הקלט היא פעולה בצעדים קבועים.</li><li>יש מקרה טוב, מקרה רע ומקרה ממוצע. למשל בחיפוש סדרתי.</li><li>לולאה בתוך לולאה מכפילה את מספר הצעדים. לולאה שהמשתנה בה מוכפל היא מהירה בהרבה.</li><li>חיפוש בינארי במערך ממוין יעיל בהרבה מחיפוש סדרתי.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2001/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2001/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>ספירת צעדים</b><code>Example01_CountSteps</code></div></li><li><span class='n'>2</span><div><b>מספר צעדים קבוע</b><code>Example02_ConstantSteps</code></div></li><li><span class='n'>3</span><div><b>חיפוש סדרתי, המקרה הטוב והמקרה הרע</b><code>Example03_LinearSearch</code></div></li><li><span class='n'>4</span><div><b>מציאת הערך הגדול ביותר</b><code>Example04_FindMax</code></div></li><li><span class='n'>5</span><div><b>לולאה בתוך לולאה</b><code>Example05_NestedLoops</code></div></li><li><span class='n'>6</span><div><b>שני פתרונות לאותה בעיה</b><code>Example06_SumByFormula</code></div></li><li><span class='n'>7</span><div><b>לולאה שהמשתנה בה מוכפל</b><code>Example07_DoublingLoop</code></div></li><li><span class='n'>8</span><div><b>חיפוש בינארי במערך ממוין</b><code>Example08_BinarySearch</code></div></li><li><span class='n'>9</span><div><b>השוואה בין שתי תוכניות</b><code>Example09_ComparePrograms</code></div></li><li><span class='n'>10</span><div><b>טבלת גידול</b><code>Example10_GrowthTable</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 01/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2001/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2001/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch01.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על יעילות</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch2">
+  <header><span class="num">2</span><div><h3>רקורסיה</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>רקורסיה</b>.</p>
+  <ul class="points"><li>פעולה רקורסיבית קוראת לעצמה. חייבים תנאי עצירה וקריאה רקורסיבית עם פרמטר קטן יותר.</li><li>בלי תנאי עצירה הפעולה לא נגמרת, והתוכנית קורסת.</li><li>הקריאות נערמות עד תנאי העצירה, והערכים חוזרים בסדר הפוך. כך עוקבים אחרי ריצה בעזרת טבלת מעקב.</li><li>סוגי רקורסיה: רגילה, כפולה (פיבונאצ'י) והדדית.</li><li>לרקורסיה יתרון בפשטות הפתרון, וחיסרון בצריכת זמן וזיכרון.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2002/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2002/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>ספירה לאחור, הרקורסיה הראשונה</b><code>Example01_Countdown</code></div></li><li><span class='n'>2</span><div><b>סכום המספרים מ-1 ועד מספר נתון, ומעקב אחרי הקריאות</b><code>Example02_SumToN</code></div></li><li><span class='n'>3</span><div><b>עצרת</b><code>Example03_Factorial</code></div></li><li><span class='n'>4</span><div><b>חזקה</b><code>Example04_Power</code></div></li><li><span class='n'>5</span><div><b>סדרת פיבונאצ'י, רקורסיה כפולה</b><code>Example05_Fibonacci</code></div></li><li><span class='n'>6</span><div><b>סכום הספרות של מספר שלם</b><code>Example06_SumOfDigits</code></div></li><li><span class='n'>7</span><div><b>סכום איברי מערך</b><code>Example07_ArraySum</code></div></li><li><span class='n'>8</span><div><b>הערך הגדול ביותר במערך</b><code>Example08_ArrayMax</code></div></li><li><span class='n'>9</span><div><b>רקורסיה הדדית</b><code>Example09_EvenOdd</code></div></li><li><span class='n'>10</span><div><b>הדפסת מספר בבסיס שתיים</b><code>Example10_PrintBinary</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 02/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2002/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2002/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch02.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על רקורסיה</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch3">
+  <header><span class="num">3</span><div><h3>תור</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>תור</b>.</p>
+  <ul class="points"><li>תור פועל לפי העיקרון הראשון נכנס ראשון יוצא.</li><li>הפעולות: הכנסה לסוף התור, הוצאה מההתחלה, הצצה בראש התור ובדיקה אם התור ריק.</li><li>התור גנרי, ולכן אפשר ליצור תור של כל סוג ערכים.</li><li>כדי לעבור על תור ולא לאבד אותו משתמשים בתור עזר.</li><li>תור מתאים לבעיות המתנה והעברה לפי סדר הגעה.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2003/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2003/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>תור ראשון</b><code>Example01_FirstQueue</code></div></li><li><span class='n'>2</span><div><b>ראש התור ובדיקה אם התור ריק</b><code>Example02_HeadAndIsEmpty</code></div></li><li><span class='n'>3</span><div><b>ריקון התור</b><code>Example03_EmptyTheQueue</code></div></li><li><span class='n'>4</span><div><b>תור של מחרוזות</b><code>Example04_QueueOfStrings</code></div></li><li><span class='n'>5</span><div><b>ספירה וסכום</b><code>Example05_CountAndSum</code></div></li><li><span class='n'>6</span><div><b>הערך הגדול ביותר בתור</b><code>Example06_Max</code></div></li><li><span class='n'>7</span><div><b>העתקת תור בלי לאבד אותו</b><code>Example07_CopyQueue</code></div></li><li><span class='n'>8</span><div><b>סינון תור</b><code>Example08_FilterQueue</code></div></li><li><span class='n'>9</span><div><b>מיזוג שני תורים ממוינים</b><code>Example09_MergeQueues</code></div></li><li><span class='n'>10</span><div><b>תור בסופרמרקט</b><code>Example10_SupermarketLine</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 03/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2003/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2003/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch03.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על תור</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter dim" id="ch4">
+  <header><span class="num">4</span><div><h3>מחסנית</h3><span class='badge dim'>לא נלמד השנה (מיקוד)</span></div></header>
+  <p class='rec' style='background:color-mix(in srgb,var(--muted) 14%,var(--card));border-color:var(--muted)'>⚠ פרק זה לא נלמד השנה (תשפ"ז) בעקבות המיקוד. החומר מצורף לעיון בלבד.</p><p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>מחסנית</b>.</p>
+  <ul class="points"><li>מחסנית פועלת לפי העיקרון האחרון נכנס ראשון יוצא.</li><li>הפעולות: הכנסה לראש, הוצאה מהראש, הצצה בראש ובדיקה אם המחסנית ריקה.</li><li>המחסנית גנרית, ולכן אפשר ליצור מחסנית של כל סוג ערכים.</li><li>שימושים נפוצים: היפוך סדר, בדיקת סוגריים והמרה לבסיס שתיים.</li></ul>
+  <div class="lower">
+  <div class='tasksrow ph' aria-hidden='true'><b>משימות אסינכרוניות</b><div><span class='btn task'>📝 משימה אסינכרונית 1</span><span class='btn task'>📝 משימה אסינכרונית 2</span></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>מחסנית ראשונה</b><code>Example01_FirstStack</code></div></li><li><span class='n'>2</span><div><b>ראש המחסנית ובדיקה אם המחסנית ריקה</b><code>Example02_TopAndIsEmpty</code></div></li><li><span class='n'>3</span><div><b>ריקון המחסנית</b><code>Example03_EmptyTheStack</code></div></li><li><span class='n'>4</span><div><b>מחסנית של מחרוזות</b><code>Example04_StackOfStrings</code></div></li><li><span class='n'>5</span><div><b>היפוך מילה</b><code>Example05_ReverseWord</code></div></li><li><span class='n'>6</span><div><b>ספירה וסכום</b><code>Example06_CountAndSum</code></div></li><li><span class='n'>7</span><div><b>העתקת מחסנית בלי לאבד אותה</b><code>Example07_CopyStack</code></div></li><li><span class='n'>8</span><div><b>הערך הגדול ביותר במחסנית</b><code>Example08_Max</code></div></li><li><span class='n'>9</span><div><b>בדיקת סוגריים תקינים</b><code>Example09_Brackets</code></div></li><li><span class='n'>10</span><div><b>המרה למספר בינארי</b><code>Example10_DecimalToBinary</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 04/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2004/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost wide" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2004/README.md">📖 הסבר</a>
+    <span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על מחסנית</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch5">
+  <header><span class="num">5</span><div><h3>שרשרת חוליות</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>שרשרת חוליות</b>.</p>
+  <ul class="points"><li>חוליה מכילה ערך והפניה לחוליה הבאה. החוליה האחרונה מצביעה על ריק.</li><li>שרשרת מיוצגת על ידי משתנה שמצביע על החוליה הראשונה.</li><li>מעבר על שרשרת מתבצע בעזרת משתנה עזר, בלי לשנות את הראש.</li><li>הוספה ומחיקה מצריכות לשים לב לשלושה מקרים: ראש השרשרת, אמצע וסוף.</li><li>החוליה גנרית, ולכן אפשר ליצור שרשרת של כל סוג ערכים.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2005/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2005/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>בניית שרשרת חוליות</b><code>Example01_BuildChain</code></div></li><li><span class='n'>2</span><div><b>מעבר על השרשרת</b><code>Example02_Traverse</code></div></li><li><span class='n'>3</span><div><b>אורך השרשרת וסכום הערכים</b><code>Example03_LengthAndSum</code></div></li><li><span class='n'>4</span><div><b>חיפוש ערך בשרשרת</b><code>Example04_Contains</code></div></li><li><span class='n'>5</span><div><b>הוספה בהתחלה</b><code>Example05_AddFirst</code></div></li><li><span class='n'>6</span><div><b>הוספה בסוף</b><code>Example06_AddLast</code></div></li><li><span class='n'>7</span><div><b>מחיקת ערך</b><code>Example07_RemoveValue</code></div></li><li><span class='n'>8</span><div><b>הוספה לשרשרת ממוינת</b><code>Example08_InsertSorted</code></div></li><li><span class='n'>9</span><div><b>שרשרת של מחרוזות</b><code>Example09_ChainOfStrings</code></div></li><li><span class='n'>10</span><div><b>פעולה רקורסיבית על שרשרת</b><code>Example10_RecursiveChain</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 05/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2005/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2005/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch05.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על שרשרת חוליות</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch6">
+  <header><span class="num">6</span><div><h3>עצים בינאריים</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>עצים בינאריים</b>.</p>
+  <ul class="points"><li>לחוליה בינארית יש ערך ושני בנים: שמאלי וימני. חוליה בלי בנים היא עלה.</li><li>סריקה בסדר קדם, תוך וסוף, והסריקה לפי רמות בעזרת תור.</li><li>רוב הפעולות על עצים הן רקורסיביות. תנאי העצירה הוא עץ ריק.</li><li>בעץ חיפוש בינארי מחפשים בזמן קצר, כי פוסלים חצי מהעץ בכל צעד.</li><li>גובה העץ, מספר העלים וסכום הערכים מחושבים ברקורסיה.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2006/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2006/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>בניית עץ בינארי</b><code>Example01_BuildTree</code></div></li><li><span class='n'>2</span><div><b>סריקה בסדר קדם</b><code>Example02_PreOrder</code></div></li><li><span class='n'>3</span><div><b>סריקה בסדר תוך</b><code>Example03_InOrder</code></div></li><li><span class='n'>4</span><div><b>סריקה בסדר סוף</b><code>Example04_PostOrder</code></div></li><li><span class='n'>5</span><div><b>מספר החוליות וסכום הערכים</b><code>Example05_CountAndSum</code></div></li><li><span class='n'>6</span><div><b>גובה העץ</b><code>Example06_Height</code></div></li><li><span class='n'>7</span><div><b>ספירת עלים</b><code>Example07_Leaves</code></div></li><li><span class='n'>8</span><div><b>חיפוש ערך בעץ בינארי רגיל</b><code>Example08_Search</code></div></li><li><span class='n'>9</span><div><b>עץ חיפוש בינארי</b><code>Example09_SearchTree</code></div></li><li><span class='n'>10</span><div><b>סריקה לפי רמות</b><code>Example10_LevelOrder</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 06/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2006/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2006/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch06.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על עצים בינאריים</span>
+  </footer>
+  </div>
+</article>
+</section>
+<div class="partband" id="partב"><h2>חלק ב: תכנות מונחה עצמים</h2><p class="sub">הפרקים ממשיכים את המספור של חלק א.</p></div>
+<section class="grid">
+<article class="chapter" id="ch7">
+  <header><span class="num">7</span><div><h3>מחלקות ועצמים</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>מחלקות ועצמים</b>.</p>
+  <ul class="points"><li>מחלקה היא תבנית, ועצם הוא מופע שלה. לעצם יש תכונות ופעולות.</li><li>הבנאי מאתחל את התכונות. התכונות פרטיות, והגישה אליהן דרך פעולות קבלה ועדכון.</li><li>שאילתה מחזירה ערך ולא משנה את העצם. פקודה משנה את מצב העצם.</li><li>מצב תקין הוא מצב שמקיים את הכללים של המחלקה.</li><li>משתנה מסוג מחלקה מכיל הפניה לעצם. השמה מעתיקה את ההפניה ולא את העצם.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2007/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2007/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>המחלקה הראשונה</b><code>Example01_FirstClass</code></div></li><li><span class='n'>2</span><div><b>הרבה עצמים ממחלקה אחת</b><code>Example02_ManyObjects</code></div></li><li><span class='n'>3</span><div><b>פעולות עדכון</b><code>Example03_Setters</code></div></li><li><span class='n'>4</span><div><b>המרה למחרוזת</b><code>Example04_ToString</code></div></li><li><span class='n'>5</span><div><b>פעולות שמחשבות</b><code>Example05_Methods</code></div></li><li><span class='n'>6</span><div><b>מצב תקין</b><code>Example06_ValidState</code></div></li><li><span class='n'>7</span><div><b>כמה בנאים</b><code>Example07_Constructors</code></div></li><li><span class='n'>8</span><div><b>בדיקה בפעולת העדכון</b><code>Example08_ValidInSetter</code></div></li><li><span class='n'>9</span><div><b>הפניות</b><code>Example09_References</code></div></li><li><span class='n'>10</span><div><b>עצם כפרמטר</b><code>Example10_ObjectAsParameter</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 07/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2007/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2007/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch07.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על מחלקות ועצמים</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch8">
+  <header><span class="num">8</span><div><h3>הכלת עצמים</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>הכלת עצמים</b>.</p>
+  <ul class="points"><li>תכונה של מחלקה יכולה להיות עצם ממחלקה אחרת, או מערך של עצמים.</li><li>מערך של עצמים מתחיל ריק, וצריך ליצור כל עצם בנפרד.</li><li>העמסה: כמה בנאים או פעולות עם אותו שם ופרמטרים שונים.</li><li>בנאי מעתיק יוצר עצם חדש עם אותם ערכים. העתקה עמוקה יוצרת גם עצמים פנימיים חדשים.</li><li>פעולה יכולה להחזיר עצם, או ערך ריק אם לא נמצא עצם מתאים.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2008/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2008/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>עצם בתוך עצם</b><code>Example01_ObjectInsideObject</code></div></li><li><span class='n'>2</span><div><b>עיגול עם מרכז</b><code>Example02_Circle</code></div></li><li><span class='n'>3</span><div><b>קטע המורכב משתי נקודות</b><code>Example03_Line</code></div></li><li><span class='n'>4</span><div><b>מערך של עצמים</b><code>Example04_ArrayOfObjects</code></div></li><li><span class='n'>5</span><div><b>מחלקה שמכילה מערך של עצמים</b><code>Example05_ClassWithArray</code></div></li><li><span class='n'>6</span><div><b>חיפוש במערך של עצמים</b><code>Example06_SearchInArray</code></div></li><li><span class='n'>7</span><div><b>העמסה</b><code>Example07_Overloading</code></div></li><li><span class='n'>8</span><div><b>בנאי מעתיק</b><code>Example08_CopyConstructor</code></div></li><li><span class='n'>9</span><div><b>העתקה רדודה והעתקה עמוקה</b><code>Example09_ShallowAndDeep</code></div></li><li><span class='n'>10</span><div><b>פעולה שמחזירה עצם</b><code>Example10_ReturnObject</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 08/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2008/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2008/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch08.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על הכלת עצמים</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch9">
+  <header><span class="num">9</span><div><h3>הורשה</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>הורשה</b>.</p>
+  <ul class="points"><li>מחלקה יורשת מקבלת את התכונות והפעולות של מחלקת האב. היחס הוא סוג של.</li><li>הבנאי של המחלקה היורשת פונה לבנאי של האב.</li><li>דריסה מגדירה מחדש פעולה של האב. אפשר להשתמש גם בגרסה של האב.</li><li>תכונה מוגנת נגישה גם למחלקות יורשות. תכונה פרטית אינה נגישה להן.</li><li>כל המחלקות יורשות מהמחלקה הראשונה, שממנה מקבלות את ההמרה למחרוזת.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2009/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2009/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>ההורשה הראשונה</b><code>Example01_FirstInheritance</code></div></li><li><span class='n'>2</span><div><b>בנאי של מחלקת האב</b><code>Example02_BaseConstructor</code></div></li><li><span class='n'>3</span><div><b>חברים חדשים במחלקה היורשת</b><code>Example03_NewMembers</code></div></li><li><span class='n'>4</span><div><b>דריסת פעולה</b><code>Example04_Override</code></div></li><li><span class='n'>5</span><div><b>קריאה לפעולה של מחלקת האב</b><code>Example05_CallBase</code></div></li><li><span class='n'>6</span><div><b>המרה למחרוזת בהורשה</b><code>Example06_ToStringInherited</code></div></li><li><span class='n'>7</span><div><b>שלוש רמות של הורשה</b><code>Example07_ThreeLevels</code></div></li><li><span class='n'>8</span><div><b>הרשאת גישה מוגנת</b><code>Example08_Protected</code></div></li><li><span class='n'>9</span><div><b>היחס הוא סוג של</b><code>Example09_IsA</code></div></li><li><span class='n'>10</span><div><b>עובדים ומנהלים</b><code>Example10_Employees</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 09/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2009/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2009/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch09.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על הורשה</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch10">
+  <header><span class="num">10</span><div><h3>מחלקה מופשטת</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>מחלקה מופשטת</b>.</p>
+  <ul class="points"><li>מחלקה מופשטת מתארת רעיון כללי, ואי אפשר ליצור ממנה עצמים.</li><li>פעולה מופשטת מוגדרת בלי גוף, וכל מחלקה יורשת חייבת לממש אותה.</li><li>במחלקה מופשטת יכולות להיות גם תכונות, בנאי ופעולות רגילות.</li><li>משתנה או מערך מסוג המחלקה המופשטת יכול להכיל עצמים של המחלקות היורשות.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2010/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2010/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>המחלקה המופשטת הראשונה</b><code>Example01_FirstAbstract</code></div></li><li><span class='n'>2</span><div><b>פעולה מופשטת</b><code>Example02_AbstractMethod</code></div></li><li><span class='n'>3</span><div><b>מימוש חלקי</b><code>Example03_PartialImplementation</code></div></li><li><span class='n'>4</span><div><b>בנאי במחלקה מופשטת</b><code>Example04_Constructor</code></div></li><li><span class='n'>5</span><div><b>מערך של צורות</b><code>Example05_ArrayOfShapes</code></div></li><li><span class='n'>6</span><div><b>סכום שטחים</b><code>Example06_TotalArea</code></div></li><li><span class='n'>7</span><div><b>עובדים בשכר שונה</b><code>Example07_Employees</code></div></li><li><span class='n'>8</span><div><b>חיות שמדברות</b><code>Example08_AbstractAnimals</code></div></li><li><span class='n'>9</span><div><b>הצורה הגדולה ביותר</b><code>Example09_Biggest</code></div></li><li><span class='n'>10</span><div><b>המחלקה המופשטת כחוזה</b><code>Example10_Contract</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 10/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2010/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2010/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch10.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על מחלקה מופשטת</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch11">
+  <header><span class="num">11</span><div><h3>פולימורפיזם</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>פולימורפיזם</b>.</p>
+  <ul class="points"><li>משתנה מסוג האב יכול להצביע על עצם של כל מחלקה יורשת.</li><li>זימון פולימורפי: הפעולה שמתבצעת נקבעת לפי סוג העצם בפועל, בזמן הריצה.</li><li>פעולה עם פרמטר מסוג האב עובדת עם כל המחלקות היורשות.</li><li>המרה כלפי מטה מאפשרת לגשת לפעולות של המחלקה היורשת, אחרי בדיקה של סוג העצם.</li><li>אפשר להוסיף מחלקה יורשת חדשה בלי לשנות את הקוד שכבר כתוב.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2011/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2011/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>משתנה מסוג מחלקת האב</b><code>Example01_BaseVariable</code></div></li><li><span class='n'>2</span><div><b>זימון פולימורפי</b><code>Example02_PolymorphicCall</code></div></li><li><span class='n'>3</span><div><b>מערך מעורב</b><code>Example03_MixedArray</code></div></li><li><span class='n'>4</span><div><b>פרמטר מסוג האב</b><code>Example04_BaseParameter</code></div></li><li><span class='n'>5</span><div><b>פעולה שמחזירה סוג אב</b><code>Example05_ReturnBase</code></div></li><li><span class='n'>6</span><div><b>הדפסת מערך של עצמים</b><code>Example06_PrintArray</code></div></li><li><span class='n'>7</span><div><b>בדיקת סוג העצם</b><code>Example07_IsOperator</code></div></li><li><span class='n'>8</span><div><b>המרה כלפי מטה</b><code>Example08_Downcast</code></div></li><li><span class='n'>9</span><div><b>חישוב שכר פולימורפי</b><code>Example09_Payroll</code></div></li><li><span class='n'>10</span><div><b>הוספת מחלקה חדשה בלי לשנות קוד קיים</b><code>Example10_NewSubclass</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 11/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2011/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2011/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch11.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על פולימורפיזם</span>
+  </footer>
+  </div>
+</article>
+<article class="chapter" id="ch12">
+  <header><span class="num">12</span><div><h3>ממשקים</h3><span class='badge hot'>עם משימה</span></div></header>
+  <p class="rec">💡 מומלץ לבצע שיעור באתר קמפוס על הפרק הזה לפני שמתחילים. בקורס מדעי המחשב באתר קמפוס פותחים את הפרק על <b>ממשקים</b>.</p>
+  <ul class="points"><li>ממשק מגדיר התנהגות בלי מימוש. היחס הוא יכול ל.</li><li>מחלקה שמממשת ממשק חייבת לממש את כל הפעולות שלו.</li><li>מחלקה יורשת ממחלקה אחת, אבל יכולה לממש כמה ממשקים.</li><li>משתנה או פרמטר מסוג ממשק מקבל עצם של כל מחלקה שמממשת אותו.</li><li>ממשק יכול לרשת מממשק אחר.</li></ul>
+  <div class="lower">
+  <div class='tasksrow'><b>משימות אסינכרוניות</b><div><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2012/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%201.md'>📝 משימה אסינכרונית 1</a><a class='btn task' href='https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2012/%D7%9E%D7%A9%D7%99%D7%9E%D7%94%20%D7%90%D7%A1%D7%99%D7%A0%D7%9B%D7%A8%D7%95%D7%A0%D7%99%D7%AA%202.md'>📝 משימה אסינכרונית 2</a></div></div>
+  <details><summary>10 דוגמאות בפרק</summary><ol class="examples"><li><span class='n'>1</span><div><b>הממשק הראשון</b><code>Example01_FirstInterface</code></div></li><li><span class='n'>2</span><div><b>ממשק כחוזה</b><code>Example02_Contract</code></div></li><li><span class='n'>3</span><div><b>כמה ממשקים</b><code>Example03_TwoInterfaces</code></div></li><li><span class='n'>4</span><div><b>משתנה מסוג ממשק</b><code>Example04_InterfaceVariable</code></div></li><li><span class='n'>5</span><div><b>ממשק כפרמטר</b><code>Example05_InterfaceParameter</code></div></li><li><span class='n'>6</span><div><b>ירושה בין ממשקים</b><code>Example06_InterfaceInheritance</code></div></li><li><span class='n'>7</span><div><b>סוג של ויכול ל</b><code>Example07_CanDo</code></div></li><li><span class='n'>8</span><div><b>צורות בעזרת ממשק</b><code>Example08_ShapesInterface</code></div></li><li><span class='n'>9</span><div><b>ממשק להשוואה</b><code>Example09_Comparable</code></div></li><li><span class='n'>10</span><div><b>מחלקה מופשטת וממשק יחד</b><code>Example10_AbstractAndInterface</code></div></li></ol></details>
+  <details class="run"><summary>איך מריצים בסטאקס</summary>
+    <ol class="runsteps"><li>פותחים את <a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>.</li><li>לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li><li>מוחקים את הקוד שנפתח בקובץ, לוחצים על "העתק קוד" כאן, ומדביקים.</li><li>לוחצים על <b>הרצה (F9)</b>.</li></ol>
+  </details>
+  <footer>
+    <button class="btn copy" data-path="פרק 12/Program.cs" type="button">📋 העתק קוד</button>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2012/Program.cs">💻 הקוד ב-GitHub</a>
+    <a class="btn ghost" href="https://github.com/ciznerguy/thelma-data-structures-12/blob/main/%D7%A4%D7%A8%D7%A7%2012/README.md">📖 הסבר</a>
+    <a class='btn quiz' href='quiz/ch12.html'>🧠 מבחן תרגול</a><span class='btn ghost wide soon' title='הקישור לפרק בקמפוס יתווסף'>🎓 קמפוס: פרק על ממשקים</span>
+  </footer>
+  </div>
+</article>
+</section>
+
+  <h2 id="personal">למידה מותאמת אישית אחרי המבחן</h2>
+  <p class="sub">בסוף כל מבחן תרגול יש כפתור שמעתיק את התוצאות ופותח את Gemini, כדי לקבל תרגול על מה שפספסתם.</p>
+  <div class="note"><ul>
+    <li>פותרים מבחן תרגול ולוחצים על "סיום ובדיקה".</li>
+    <li>לוחצים על "העתקה ופתיחת Gemini" ומדביקים בשיחה.</li>
+    <li>הטקסט אינו כולל פרטים אישיים, ואין ציון שנשמר. <a href="gemini.html">הוראות מפורטות</a></li>
+  </ul></div>
+
+  <h2 id="start">איך מריצים בסטאקס</h2>
+  <p class="sub">אין צורך להתקין כלום. מי שרוצה לעבוד ב-Visual Studio 2022 או ב-.NET 8 יכול לפתוח את הפתרון <code>ThelmaDataStructures12.sln</code>.</p>
+  <ol class="steps">
+    <li><b>פותחים את סטאקס</b><br><a href="https://stacks.co.il/console/sandbox/">סביבת הקוד של סטאקס</a>. לוחצים על <b>סביבת קוד</b> ← <b>פרויקט חדש</b> ← נותנים שם לפרויקט ← בוחרים בשפה <bdi dir="ltr">C#</bdi>.</li>
+    <li><b>מנקים את הקובץ</b><br>מוחקים את הקוד שמופיע בקובץ שנפתח. אם מתקבלות שגיאות של <bdi dir="ltr">Java</bdi>, הפרויקט נוצר בשפה לא נכונה, וצריך ליצור פרויקט חדש בשפת <bdi dir="ltr">C#</bdi>.</li>
+    <li><b>מעתיקים ומדביקים</b><br>בכרטיס של הפרק לוחצים על "העתק קוד" ומדביקים בקובץ. כל פרק הוא קובץ אחד שעומד בפני עצמו.</li>
+    <li><b>מריצים</b><br>לוחצים על <b>הרצה (F9)</b>. ב-<code>Main</code> כל שורה מפעילה דוגמה, ואפשר לסמן שורות בהערה (<code>//</code>) כדי להריץ רק דוגמה מסוימת.</li>
+  </ol>
+  <p class="sub" style="margin-top:14px">ב-Visual Studio או משורת הפקודה (לא חובה):</p>
+  <pre>git clone https://github.com/ciznerguy/thelma-data-structures-12.git
+cd "פרק 05"
+dotnet run</pre>
+
+  <h2>הערות על הקוד</h2>
+  <div class="note"><ul>
+    <li>ההערות בקוד כתובות בעברית בלבד, והפלט של התוכניות באנגלית כדי שיוצג נכון בכל חלון הרצה.</li>
+    <li>הקוד תואם את תכנית הלימודים: בלי אופרטור תנאי מקוצר, בלי השמות מקוצרות, בלי switch, do-while, break, continue ו-try/catch.</li>
+    <li>בפרקים 3 עד 6 המחלקות של תכנית הלימודים (חוליה, תור, מחסנית, חוליה בינארית) כתובות בהמשך אותו קובץ, ובפרקים 7 עד 12 המחלקות כתובות בהמשך הקובץ. לכן מעתיקים קובץ אחד בלבד.</li>
+    <li>משימות אסינכרוניות מוגשות בסטאקס, וכל הגשה מקבלת ציון.</li>
+    <li>בכל פרק שנלמד יש מבחן תרגול של 15 שאלות, ללמידה בלבד: אין ציון שנשמר.</li>
+  </ul></div>
+</main>
+
+<footer class="site"><div class="wrap">מבנה נתונים ותכנות מונחה עצמים, תלמה ילין · <a href="https://github.com/ciznerguy/thelma-data-structures-12">קוד המקור ב-GitHub</a></div></footer>
+<script>
+(function(){
+  // כל כרטיסי הפרקים באותו גובה: מתאימים לכרטיס הגבוה ביותר (כשהפירוטים סגורים)
+  function equalize(){
+    var cards=[].slice.call(document.querySelectorAll(".chapter"));
+    cards.forEach(function(c){c.style.minHeight="";});
+    if(window.innerWidth<700)return;
+    var openOnes=[].slice.call(document.querySelectorAll(".chapter details[open]"));
+    openOnes.forEach(function(d){d.removeAttribute("open");});
+    var max=0;
+    cards.forEach(function(c){max=Math.max(max,c.getBoundingClientRect().height);});
+    openOnes.forEach(function(d){d.setAttribute("open","");});
+    cards.forEach(function(c){c.style.minHeight=Math.ceil(max)+"px";});
+  }
+  var t;
+  function later(){clearTimeout(t);t=setTimeout(equalize,120);}
+  window.addEventListener("resize",later);
+  window.addEventListener("load",equalize);
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(equalize);}
+  equalize();
+})();
+</script>
+<script>
+(function(){
+  var RAW="https://raw.githubusercontent.com/ciznerguy/thelma-data-structures-12/main/";
+  document.addEventListener("click",function(e){
+    var b=e.target.closest(".copy"); if(!b)return;
+    var old=b.textContent; b.disabled=true; b.textContent="מעתיק...";
+    var path=b.getAttribute("data-path").split("/").map(encodeURIComponent).join("/");
+    fetch(RAW+path).then(function(r){if(!r.ok)throw 0;return r.text();})
+    .then(function(t){return navigator.clipboard.writeText(t);})
+    .then(function(){b.textContent="הועתק ✓";})
+    .catch(function(){b.textContent="לא הצלחתי להעתיק, פתחו את הקוד ב-GitHub";})
+    .then(function(){setTimeout(function(){b.textContent=old;b.disabled=false;},2500);});
+  });
+})();
+</script>
+</body>
+</html>
